@@ -2,7 +2,6 @@ package gestion_des_employees;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -30,7 +29,7 @@ public class GestionEmployeeImpl implements IEmploye {
 			 
 			ps.close();   
 			
-		} catch (SQLException ee) {
+		} catch (Exception ee) {
 			ee.printStackTrace();
 		}
 		
@@ -62,7 +61,7 @@ public class GestionEmployeeImpl implements IEmploye {
 					}
 					
 					pr.close();
-				} catch (SQLException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 		return employes;
@@ -94,7 +93,7 @@ public class GestionEmployeeImpl implements IEmploye {
 			}
 			
 			pr.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 return employes;
@@ -125,7 +124,7 @@ return employes;
 			}
 			
 			pr.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if(em==null)
@@ -140,7 +139,7 @@ Connection connec = ConnectionDB.getConnection();
 		
 		try {
 			
-			java.sql.PreparedStatement ps = connec.prepareStatement("delete employe set nom=? prenom=? sexe=? note=? service=? date_eval=? historique_maladi=? where matricule=?");
+			java.sql.PreparedStatement ps = connec.prepareStatement("update employe set nom=? prenom=? sexe=? note=? service=? date_eval=? historique_maladi=? where matricule=?");
 			
 			ps.setString(1, e.getNom());
 			ps.setString(2, e.getPrenom());
@@ -154,7 +153,7 @@ Connection connec = ConnectionDB.getConnection();
 			 
 			ps.close();   
 			
-		} catch (SQLException ee) {
+		} catch (Exception ee) {
 			ee.printStackTrace();
 		}
 		
@@ -167,14 +166,14 @@ Connection connec = ConnectionDB.getConnection();
 		
 		try {
 			
-			java.sql.PreparedStatement ps = connec.prepareStatement("update employe where matricule=?");
+			java.sql.PreparedStatement ps = connec.prepareStatement("delete from employe where matricule=?");
 			 
 			ps.setInt(1, mat);
 			ps.executeUpdate(); 
 			 
 			ps.close();   
 			
-		} catch (SQLException ee) {
+		} catch (Exception ee) {
 			ee.printStackTrace();
 		}
 		
