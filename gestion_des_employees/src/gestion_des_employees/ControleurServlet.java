@@ -1,6 +1,7 @@
 package gestion_des_employees;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -38,9 +39,11 @@ public class ControleurServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		//request.getRequestDispatcher("index.jsp").forward(request, response);
+	    doPost(request,response);
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -56,8 +59,7 @@ public class ControleurServlet extends HttpServlet {
 		if( action !="") { 
 		
 		     if( model.getAction().equals("save")  && request.getParameter("saveORediter").equals("save")) { 
-		    	 
-					//2* :recuperer les donnees saisies    
+		    	     
 					String nom=request.getParameter("nom");
 					String prenom= request.getParameter("prenom");
 					int matricule= Integer.parseInt(request.getParameter("matricule"));
@@ -68,10 +70,76 @@ public class ControleurServlet extends HttpServlet {
 					String historique_maladie =request.getParameter("historique_maladie");
 					
 					
-					//3* : stocker les donnees saisies (ici le  motCle) dans le model
-					Employe emp=new Employe(nom,prenom,matricule,sexe,note,service,date_eval,historique_maladie);
-					model.setEmploye(emp);
+					Employe empl=new Employe(nom,prenom,matricule,sexe,note,service,date_eval,historique_maladie);
+					model.setEmploye(empl);
 					
-		     }}}
+					emp.addEmploye(empl);
+					
+					ArrayList<Employe> allEmployes=emp.listeEmploye();
+					model.setEmployeParMC(allEmployes);
+		     }
+		     else if(model.getAction().equals("save")  && request.getParameter("saveORediter").equals("editer")) {
+				 
+					
+				  
+				    Employe EmployeToEdit =	emp.getEmploye( Integer.parseInt(request.getParameter("matriculeEmployeToEdit")) );
+				    
+				    EmployeToEdit.setNom(request.getParameter("nom"));
+				    EmployeToEdit.setPrenom(request.getParameter("prenom"));
+				    EmployeToEdit.setSexe(request.getParameter("sexe"));
+				    EmployeToEdit.setService(request.getParameter("service"));
+				    EmployeToEdit.setDate_eval(request.getParameter("date_eval"));
+				    EmployeToEdit.setHistorique_maladie(request.getParameter("historique_maladie"));
+				      
+					model.setEmploye(EmployeToEdit); 
+					
+					
+					emp.updateEmploye(EmployeToEdit);  
+					
+					 model.setEmploye(new Employe());  
+					 
+					ArrayList<Employe> allEmployes=emp.listeEmploye();   
+					model.setEmployeParMC(allEmployes);
+					
+		}
+		   else if( model.getAction().equals("delete") ) {  
+				
+				emp.deleteEmploye(Integer.parseInt(request.getParameter("matricule")));
+				 
+				ArrayList<Employe> allEmployes=emp.listeEmploye();   
+				model.setEmployeParMC(allEmployes);
+				
+		} 
+		   else  if ( model.getAction().equals("chercher")) {   
+			
+			   String mc=request.getParameter("motCle");
+			
+			model.setMotCle(mc);  
+			ArrayList<Employe> employeParMC =emp.EmployeParMC(mc);
+			
+			model.setEmployeParMC(employeParMC);
+			
 
+			
+		} 
+		   else if( model.getAction().equals("editer") ) { 
+			 
+			 
+			 model.setSaveORediter("editer");
+			 
+			 
+			 Employe employeToEdit = emp.getEmploye( Integer.parseInt(request.getParameter("matricule")) ); 
+			 model.setEmploye(employeToEdit);
+			 
+			 ArrayList<Employe> allEmployes=emp.listeEmploye();   
+			 model.setEmployeParMC(allEmployes);
+
+	    }
+	}
+	
+	
+	 request.setAttribute( "model", model );  
+	 request.getRequestDispatcher("index.jsp").forward(request,response); 
 }
+}
+

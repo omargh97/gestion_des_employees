@@ -1,20 +1,33 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="gestion_des_employees.Employe"%>
+<%@page import="java.util.List"%>
+<%@page import="gestion_des_employees.Model"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+pageEncoding="ISO-8859-1"%>
+
+<%
+Model model=new Model();
+if(request.getAttribute("model") != null){
+	 model=(Model)request.getAttribute("model");
+}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-	<form action="controleur" method="post"> 
-				<table>
-					<tr> 
-						<td>Mot Clé:  </td>
-						<td> <input type="text" name="motCle" /></td>
-						<td><input type="submit" name="action" value="chercher" /> </td>
-					</tr>
-				</table>
-		</form>
-</body>
-</html>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Gestion Employes</title>
+<link rel="stylesheet"" type="text/css"  href="<%=request.getContextPath()%>/css/style.css" >
+
+	<script type="text/javascript">
+		function confirmer(url){  
+			
+			var rep=confirm("Etes vous sur de vouloir supprimer ?");
+			if(rep==true){
+				document.location=url;
+			}
+			
+		}
+	</script>
+
+
