@@ -19,14 +19,6 @@ public class ControleurServlet extends HttpServlet {
 	private IEmploye emp;
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ControleurServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
