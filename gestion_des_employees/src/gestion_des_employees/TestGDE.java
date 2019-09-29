@@ -47,10 +47,21 @@ public class TestGDE {
 		e31.setDate_eval("05/9/2018");
 		e31.setHistorique_maladie("pas de maladie");
 		
+		Employe e32 =new Employe();
+		e32.setNom("omr");
+		e32.setPrenom("gh");
+		e32.setMatricule(12);
+		e32.setSexe("homme");
+		e32.setNote(4.5);
+		e32.setService("dprt info");
+		e32.setDate_eval("05/9/2019");
+		e32.setHistorique_maladie("pas de maladie");
+		
 		gde.addEmploye(e1);
 		gde.addEmploye(e2);
 		gde.addEmploye(e3);
 		gde.addEmploye(e31);
+		gde.addEmploye(e32);
 		gde.deleteEmploye(e1.getMatricule());
 		
 	}
